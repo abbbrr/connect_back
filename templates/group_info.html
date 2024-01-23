@@ -1,16 +1,27 @@
-<!-- group_info.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Информация о группе</title>
+    <title>{{ group.group_name }}</title>
 </head>
 <body>
-    <h1>Информация о группе {{ group_id }}</h1>
+    <h1>{{ group.group_name }}</h1>
+    <h2>Пользователи:</h2>
+    <ul>
+           <ul>
+                {% for member in group.members %}
+                    <li>{{ member }}</li>
+                {% endfor %}
+            </ul>
 
-    <!-- Здесь можете отображать дополнительную информацию о группе -->
-
-    <a href="{{ url_for('home') }}">Вернуться на главную страницу</a>
+    </ul>
+    <h2>Присоединиться к группе:</h2>
+    <form method="post" action="{{ url_for('group_chat', group_id=group.group_id) }}">
+        <label for="user_name">Ваше имя:</label>
+        <input type="text" id="user_name" name="user_name" required>
+        <button type="submit">Присоединиться</button>
+    </form>
 </body>
 </html>
