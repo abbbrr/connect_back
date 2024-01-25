@@ -105,9 +105,9 @@ def create_group():
         data = request.get_json()
         group_name = data.get('group_name')
         theme = data.get('theme')
-        max_members = data.get('max_members', 8)
+        max_members = int(data.get('max_members', 8))
 
-        user_name = session.get('user')
+        user_name = data.get('username')
         group_id = generate_group_id()
 
         existing_group = groups_collection.find_one({'group_id': group_id})
@@ -126,7 +126,7 @@ def create_group():
                 'group_id': group_id,
                 'group_name': group_name,
                 'theme': theme,
-                'members': [{'username': user_name or "", 'status': 'pending'}],
+                'members': [{'username': user_name or ""}],
                 'max_members': max_members
             })
 
@@ -185,7 +185,6 @@ def api_get_group(group_id):
             'group_name': group['group_name'],
             'theme': group['theme'],
             'members': group['members'],
-            'user_actions': group.get('user_actions', {})
         }), 200
     else:
         return jsonify({'error': 'Группа не найдена'}), 404
