@@ -261,5 +261,5 @@ def handle_update_action(data):
     emit('action_updated', {'user_name': user_name, 'your_action': your_action}, room=group_id)
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    socketio.run(app, debug=True)
+    app.run(port=3000, debug=True)
+    # socketio.run(app, debug=True)
